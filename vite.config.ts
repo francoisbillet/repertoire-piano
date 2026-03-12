@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
+  base: "/repertoire-piano/",
   plugins: [
     react(),
     mode === "development" && componentTagger(),
