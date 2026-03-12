@@ -15,24 +15,24 @@
     --popover: 40 30% 98%;
     --popover-foreground: 30 10% 15%;
 
-    --primary: 24 80% 50%;
-    --primary-foreground: 40 33% 98%;
+    --primary: 152 45% 40%;
+    --primary-foreground: 150 30% 98%;
 
-    --secondary: 35 30% 90%;
-    --secondary-foreground: 30 10% 25%;
+    --secondary: 150 20% 92%;
+    --secondary-foreground: 150 15% 25%;
 
-    --muted: 35 20% 92%;
-    --muted-foreground: 30 8% 50%;
+    --muted: 150 15% 93%;
+    --muted-foreground: 150 8% 50%;
 
-    --accent: 24 60% 94%;
-    --accent-foreground: 24 80% 35%;
+    --accent: 152 30% 93%;
+    --accent-foreground: 152 45% 28%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 35 20% 88%;
-    --input: 35 20% 88%;
-    --ring: 24 80% 50%;
+    --border: 150 15% 88%;
+    --input: 150 15% 88%;
+    --ring: 152 45% 40%;
 
     --radius: 0.75rem;
 
@@ -71,7 +71,7 @@
   }
   .random-btn:hover {
     @apply scale-105 shadow-xl;
-    background: hsl(24 80% 45%);
+    background: hsl(152 45% 34%);
   }
   .random-btn:active {
     @apply scale-95;
