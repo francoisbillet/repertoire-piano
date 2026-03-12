@@ -71,7 +71,7 @@
   }
   .random-btn:hover {
     @apply scale-105 shadow-xl;
-    background: hsl(24 80% 45%);
+    background: hsl(152 45% 34%);
   }
   .random-btn:active {
     @apply scale-95;
