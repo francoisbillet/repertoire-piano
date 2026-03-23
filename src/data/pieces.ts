@@ -4,28 +4,35 @@ export interface Piece {
 }
 
 export const pieces: Piece[] = [
-  { title: "Una mattina", composer: "Ludovico Einaudi" },
+  { title: "Una Mattina (Intouchables)", composer: "Ludovico Einaudi" },
   { title: "Primavera", composer: "Ludovico Einaudi" },
-  { title: "Nuvole bianche", composer: "Ludovico Einaudi" },
+  { title: "Nuvole Bianche", composer: "Ludovico Einaudi" },
 
-  { title: "River flows in you", composer: "Yiruma" },
-  { title: "Love me", composer: "Yiruma" },
+  { title: "Sleeping Lotus", composer: "Joep Beving" },
+
+  { title: "River Flows In You", composer: "Yiruma" },
+  { title: "Love Me", composer: "Yiruma" },
   { title: "Maybe", composer: "Yiruma" },
-  { title: "Kiss the rain", composer: "Yiruma" },
-  { title: "Scenery through my window", composer: "Yiruma" },
+  { title: "Kiss The Rain", composer: "Yiruma" },
+  { title: "Scenery Through The Window", composer: "Yiruma" },
+  { title: "Fairy Tale", composer: "Yiruma" },
+  { title: "Destiny Of Love", composer: "Yiruma" },
 
   { title: "Summer", composer: "Joe Hisaishi" },
-  { title: "Le voyage de Chihiro", composer: "Joe Hisaishi" },
-  { title: "The wind forest (Totoro)", composer: "Joe Hisaishi" },
-  { title: "Le château dans le ciel", composer: "Joe Hisaishi" },
-  { title: "Le château ambulant", composer: "Joe Hisaishi" },
+  { title: "One Summer's Day (Le voyage de Chihiro)", composer: "Joe Hisaishi" },
+  { title: "The Wind Forest (Mon voisin Totoro)", composer: "Joe Hisaishi" },
+  { title: "Confessions in the Moonlight (Le château dans le ciel)", composer: "Joe Hisaishi" },
+  { title: "Merry-Go-Round (Le château ambulant)", composer: "Joe Hisaishi" },
+  { title: "Kiki's Delivery Service", composer: "Joe Hisaishi" },
 
-  { title: "The heart asks pleasure first", composer: "Michael Nyman" },
+  { title: "The heart asks pleasure first (La leçon de piano)", composer: "Michael Nyman" },
 
   { title: "Comptine d'un autre été: l'après-midi", composer: "Yann Tiersen" },
-  { title: "La valse d'Amélie", composer: "Yann Tiersen" },
+  { title: "La valse d'Amélie (Amélie Poulain)", composer: "Yann Tiersen" },
   { title: "Rue des cascades", composer: "Yann Tiersen" },
   { title: "Mother's journey", composer: "Yann Tiersen" },
+
+  { title: "Time (Inception)", composer: "Hans Zimmer" },
 
   { title: "Sonate en do", composer: "Mozart" },
   { title: "Marche turque", composer: "Mozart" },
@@ -34,7 +41,9 @@ export const pieces: Piece[] = [
 
   { title: "Lettre à Élise", composer: "Ludwig van Beethoven" },
 
-  { title: "Nocturne n°2", composer: "Chopin" },
+  { title: "Nocturne Opus 9 No. 2", composer: "Chopin" },
+
+  { title: "Canon", composer: "Johann Pachelbel" },
 
   { title: "The entertainer", composer: "Scott Joplin" },
   { title: "Mapple leaf rag", composer: "Scott Joplin" },
@@ -78,6 +87,4 @@ export const pieces: Piece[] = [
   { title: "Comme un ouragan", composer: "Stéphanie de Monaco" },
 
   { title: "Demons", composer: "Imagine Dragons" },
-
-  { title: "La panthère rose", composer: "Henry Mancini" },
 ];
