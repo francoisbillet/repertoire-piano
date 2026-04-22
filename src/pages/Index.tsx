@@ -4,21 +4,20 @@ import { RandomButton } from "@/components/RandomButton";
 import { RandomResult } from "@/components/RandomResult";
 import { SearchBar } from "@/components/SearchBar";
 import { PieceListByComposer } from "@/components/PieceListByComposer";
-import { Stats } from "@/components/Stats";
 import { Music } from "lucide-react";
 import type { Piece } from "@/data/pieces";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 const Index = () => {
   const [selectedPiece, setSelectedPiece] = useState<Piece | null>(null);
   const [search, setSearch] = useState("");
+  const [includeMorceaux, setIncludeMorceaux] = useState(true);
+  const [includeChansons, setIncludeChansons] = useState(false);
+  const [listIncludeMorceaux, setListIncludeMorceaux] = useState(true);
+  const [listIncludeChansons, setListIncludeChansons] = useState(true);
 
-  const composers = useMemo(() => {
-    const map = new Map<string, number>();
-    pieces.forEach((p) => map.set(p.composer, (map.get(p.composer) || 0) + 1));
-    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
-  }, []);
-
-  const filteredPieces = useMemo(() => {
+  const searchedPieces = useMemo(() => {
     return pieces.filter((p) => {
       return (
         !search ||
@@ -27,6 +26,14 @@ const Index = () => {
       );
     });
   }, [search]);
+
+  const filteredPieces = useMemo(() => {
+    return searchedPieces.filter(
+      (p) =>
+        (p.type === "morceau" && listIncludeMorceaux) ||
+        (p.type === "chanson" && listIncludeChansons),
+    );
+  }, [searchedPieces, listIncludeMorceaux, listIncludeChansons]);
 
   const groupedByComposer = useMemo(() => {
     const map = new Map<string, Piece[]>();
@@ -38,7 +45,18 @@ const Index = () => {
   }, [filteredPieces]);
 
   const pickRandom = () => {
-    const pool = filteredPieces.length > 0 ? filteredPieces : pieces;
+    const matchesType = (piece: Piece) =>
+      (piece.type === "morceau" && includeMorceaux) || (piece.type === "chanson" && includeChansons);
+
+    const filteredPool = searchedPieces.filter(matchesType);
+    const fallbackPool = pieces.filter(matchesType);
+    const pool = filteredPool.length > 0 ? filteredPool : fallbackPool;
+
+    if (pool.length === 0) {
+      setSelectedPiece(null);
+      return;
+    }
+
     const idx = Math.floor(Math.random() * pool.length);
     setSelectedPiece(pool[idx]);
   };
@@ -53,17 +71,66 @@ const Index = () => {
       </header>
 
       <main className="container max-w-lg mx-auto px-4 pb-12 space-y-6">
-        <div className="text-center">
-          <RandomButton onClick={pickRandom} />
-        </div>
+        <section className="rounded-lg border bg-card p-4 space-y-3">
+          <h2 className="text-lg font-semibold text-center text-muted-foreground">Génération aléatoire</h2>
+          <div className="space-y-3">
+            <div className="flex items-center justify-center gap-6">
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="random-morceau"
+                  checked={includeMorceaux}
+                  onCheckedChange={(checked) => setIncludeMorceaux(checked === true)}
+                />
+                <Label htmlFor="random-morceau">Morceau</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="random-chanson"
+                  checked={includeChansons}
+                  onCheckedChange={(checked) => setIncludeChansons(checked === true)}
+                />
+                <Label htmlFor="random-chanson">Chanson</Label>
+              </div>
+            </div>
 
-        {selectedPiece && <RandomResult piece={selectedPiece} />}
+            <div className="text-center">
+              <RandomButton onClick={pickRandom} />
+            </div>
 
-        <Stats total={pieces.length} composers={composers} />
+            {selectedPiece && <RandomResult piece={selectedPiece} />}
+          </div>
+        </section>
 
-        <SearchBar value={search} onChange={setSearch} />
+        <section className="rounded-lg border bg-card p-4 space-y-4">
+          <h2 className="text-lg font-semibold text-center text-muted-foreground">Recherche et filtres</h2>
 
-        <PieceListByComposer groups={groupedByComposer} total={filteredPieces.length} />
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="list-morceau"
+                checked={listIncludeMorceaux}
+                onCheckedChange={(checked) => setListIncludeMorceaux(checked === true)}
+              />
+              <Label htmlFor="list-morceau">Morceau</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="list-chanson"
+                checked={listIncludeChansons}
+                onCheckedChange={(checked) => setListIncludeChansons(checked === true)}
+              />
+              <Label htmlFor="list-chanson">Chanson</Label>
+            </div>
+          </div>
+
+          <SearchBar value={search} onChange={setSearch} />
+
+          <PieceListByComposer
+            groups={groupedByComposer}
+            total={filteredPieces.length}
+            composerCount={groupedByComposer.length}
+          />
+        </section>
       </main>
     </div>
   );
