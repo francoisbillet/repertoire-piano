@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { pieces } from "@/data/pieces";
+import { learningPieces, pieces } from "@/data/pieces";
 import { RandomButton } from "@/components/RandomButton";
 import { RandomResult } from "@/components/RandomResult";
 import { SearchBar } from "@/components/SearchBar";
@@ -16,6 +16,8 @@ const Index = () => {
   const [includeChansons, setIncludeChansons] = useState(false);
   const [listIncludeMorceaux, setListIncludeMorceaux] = useState(true);
   const [listIncludeChansons, setListIncludeChansons] = useState(true);
+  const [learningIncludeMorceaux, setLearningIncludeMorceaux] = useState(true);
+  const [learningIncludeChansons, setLearningIncludeChansons] = useState(true);
 
   const searchedPieces = useMemo(() => {
     return pieces.filter((p) => {
@@ -43,6 +45,23 @@ const Index = () => {
     });
     return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
   }, [filteredPieces]);
+
+  const filteredLearningPieces = useMemo(() => {
+    return learningPieces.filter(
+      (p) =>
+        (p.type === "morceau" && learningIncludeMorceaux) ||
+        (p.type === "chanson" && learningIncludeChansons),
+    );
+  }, [learningIncludeMorceaux, learningIncludeChansons]);
+
+  const learningGroupedByComposer = useMemo(() => {
+    const map = new Map<string, Piece[]>();
+    filteredLearningPieces.forEach((p) => {
+      if (!map.has(p.composer)) map.set(p.composer, []);
+      map.get(p.composer)!.push(p);
+    });
+    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  }, [filteredLearningPieces]);
 
   const pickRandom = () => {
     const matchesType = (piece: Piece) =>
@@ -129,6 +148,37 @@ const Index = () => {
             groups={groupedByComposer}
             total={filteredPieces.length}
             composerCount={groupedByComposer.length}
+          />
+        </section>
+
+        <section className="rounded-lg border bg-card p-4 space-y-4">
+          <h2 className="text-lg font-semibold text-center text-muted-foreground">
+            Pièces à apprendre
+          </h2>
+
+          <div className="flex items-center justify-center gap-6">
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="learning-morceau"
+                checked={learningIncludeMorceaux}
+                onCheckedChange={(checked) => setLearningIncludeMorceaux(checked === true)}
+              />
+              <Label htmlFor="learning-morceau">Morceau</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="learning-chanson"
+                checked={learningIncludeChansons}
+                onCheckedChange={(checked) => setLearningIncludeChansons(checked === true)}
+              />
+              <Label htmlFor="learning-chanson">Chanson</Label>
+            </div>
+          </div>
+
+          <PieceListByComposer
+            groups={learningGroupedByComposer}
+            total={filteredLearningPieces.length}
+            composerCount={learningGroupedByComposer.length}
           />
         </section>
       </main>
